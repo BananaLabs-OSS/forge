@@ -12,7 +12,8 @@ permissions: {}
 
 jobs:
   test-node:
-    runs-on: ubuntu-latest
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: [self-hosted, linux, x64]
     timeout-minutes: 10
     strategy:
       matrix:
@@ -35,7 +36,8 @@ jobs:
     - name: Run test with Node.js ${{ matrix.node-version }}
       run: npm run test-node
   test-karma:
-    runs-on: ubuntu-latest
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: [self-hosted, linux, x64]
     timeout-minutes: 10
     strategy:
       matrix:
@@ -72,7 +74,8 @@ jobs:
 #    - name: Run eslint
 #      run: npm run lint
   coverage:
-    runs-on: ubuntu-latest
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: [self-hosted, linux, x64]
     timeout-minutes: 10
     strategy:
       matrix:
